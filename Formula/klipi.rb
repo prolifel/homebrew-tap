@@ -1,8 +1,8 @@
 class Klipi < Formula
   desc "Lightweight clipboard manager for macOS"
   homepage "https://github.com/prolifel/klipi"
-  url "https://github.com/prolifel/klipi/archive/refs/tags/v1.0.9.tar.gz"
-  sha256 "06de60e9d68e3a819dbdef93da7fdd33671b449f81df2bb91c930facf976ecdb"
+  url "https://github.com/prolifel/klipi/archive/refs/tags/v1.0.10.tar.gz"
+  sha256 "8e414b3f32aad147ccfc21c08fed25add12dfcbefd7e23c4086a73089f7dc3e4"
   license "MIT"
   head "https://github.com/prolifel/klipi.git", branch: "main"
 
