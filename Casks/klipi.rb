@@ -2,7 +2,7 @@ cask "klipi" do
   version "1.0.16"
   sha256 "e4746ab45ea29db24fb4ea5e42d26df3d5e97b341cbd84a75cd3486c586fc29b"
 
-  url "https://github.com/prolifel/klipi/releases/download/v#{version}/Klipi-#{version}.dmg"
+  url "https://github.com/prolifel/klipi/releases/download/v\#{version}/Klipi-\#{version}.dmg"
   name "Klipi"
   desc "Lightweight clipboard manager for menu bar"
   homepage "https://github.com/prolifel/klipi"
@@ -14,40 +14,15 @@ cask "klipi" do
 
   app "Klipi.app"
 
-  uninstall quit: "com.klipi.app"
-
-  uninstall_script: {
-    executable: "klipi-uninstall",
-    script: <<~BASH
-      #!/bin/bash
-      set -e
-      echo "Removing Klipi from Applications..."
-      rm -f /Applications/Klipi.app
-      echo "Running brew uninstall..."
-      brew uninstall --cask prolifel/homebrew-tap/klipi
-      echo "Klipi has been uninstalled."
-    BASH
-  }
-
-  postflight do
-    app_link = "/Applications/Klipi.app"
-    if File.exist?(app_link)
-      FileUtils.rm(app_link)
-    end
-    FileUtils.ln_sf(appdir/"Klipi.app", app_link)
-  rescue => e
-    # Error handling moved to caveats
-  end
-
   caveats do
-    s = "Klipi has been installed to #{appdir}/Klipi.app\n\n"
+    s = "Klipi has been installed to \#{appdir}/Klipi.app\n\n"
 
     if File.symlink?("/Applications/Klipi.app")
       s += "A symlink has been created in /Applications.\n\n"
     else
       s += "\e[33mCould not create symlink in /Applications.\e[0m\n"
       s += "To add to Applications manually, run:\n"
-      s += "  ln -sf #{appdir}/Klipi.app /Applications/Klipi.app\n\n"
+      s += "  ln -sf \#{appdir}/Klipi.app /Applications/Klipi.app\n\n"
     end
 
     s += "\e[32m==> IMPORTANT: Grant Input Monitoring permission!\e[0m\n"
