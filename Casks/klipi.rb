@@ -4,7 +4,7 @@ cask "klipi" do
 
   url "https://github.com/prolifel/klipi/releases/download/v\#{version}/Klipi-\#{version}.dmg"
   name "Klipi"
-  desc "Lightweight clipboard manager for macOS menu bar"
+  desc "Lightweight clipboard manager for menu bar"
   homepage "https://github.com/prolifel/klipi"
 
   livecheck do
@@ -13,31 +13,6 @@ cask "klipi" do
   end
 
   app "Klipi.app"
-
-  uninstall quit: "com.klipi.app"
-
-  uninstall_script: {
-    executable: "klipi-uninstall",
-    script: <<~BASH
-      #!/bin/bash
-      set -e
-      echo "Removing Klipi from Applications..."
-      rm -f /Applications/Klipi.app
-      echo "Running brew uninstall..."
-      brew uninstall --cask prolifel/homebrew-tap/klipi
-      echo "Klipi has been uninstalled."
-    BASH
-  }
-
-  postflight do
-    app_link = "/Applications/Klipi.app"
-    if File.exist?(app_link)
-      FileUtils.rm(app_link)
-    end
-    FileUtils.ln_sf(appdir/"Klipi.app", app_link)
-  rescue => e
-    # Error handling moved to caveats
-  end
 
   caveats do
     s = "Klipi has been installed to \#{appdir}/Klipi.app\n\n"
@@ -61,8 +36,29 @@ cask "klipi" do
     s
   end
 
+  postflight do
+    app_link = "/Applications/Klipi.app"
+    FileUtils.rm_f(app_link)
+    FileUtils.ln_sf(appdir/"Klipi.app", app_link)
+  end
+
+  uninstall quit: "com.klipi.app"
+
+  uninstall_script: {
+    executable: "klipi-uninstall",
+    script: <<~BASH
+      #!/bin/bash
+      set -e
+      echo "Removing Klipi from Applications..."
+      rm -f /Applications/Klipi.app
+      echo "Running brew uninstall..."
+      brew uninstall --cask prolifel/homebrew-tap/klipi
+      echo "Klipi has been uninstalled."
+    BASH
+  }
+
   zap trash: [
-    "~/Library/Preferences/com.klipi.app.plist",
     "~/Library/Application Support/Klipi",
+    "~/Library/Preferences/com.klipi.app.plist",
   ]
 end
