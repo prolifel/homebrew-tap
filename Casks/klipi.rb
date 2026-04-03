@@ -1,6 +1,6 @@
 cask "klipi" do
-  version "1.0.13"
-  sha256 "<REPLACE_WITH_ACTUAL_SHA256>"
+  version "1.0.16"
+  sha256 "e4746ab45ea29db24fb4ea5e42d26df3d5e97b341cbd84a75cd3486c586fc29b"
 
   url "https://github.com/prolifel/klipi/releases/download/v#{version}/Klipi-#{version}.dmg"
   name "Klipi"
