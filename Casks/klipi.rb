@@ -44,19 +44,6 @@ cask "klipi" do
 
   uninstall quit: "com.klipi.app"
 
-  uninstall_script: {
-    executable: "klipi-uninstall",
-    script: <<~BASH
-      #!/bin/bash
-      set -e
-      echo "Removing Klipi from Applications..."
-      rm -f /Applications/Klipi.app
-      echo "Running brew uninstall..."
-      brew uninstall --cask prolifel/homebrew-tap/klipi
-      echo "Klipi has been uninstalled."
-    BASH
-  }
-
   zap trash: [
     "~/Library/Application Support/Klipi",
     "~/Library/Preferences/com.klipi.app.plist",
