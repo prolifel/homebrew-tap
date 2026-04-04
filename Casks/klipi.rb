@@ -14,10 +14,14 @@ cask "klipi" do
 
   app "Klipi.app"
 
-  postflight do
+  preflight do
     app_link = "/Applications/Klipi.app"
     File.unlink(app_link) if File.symlink?(app_link)
-    File.symlink(appdir/"Klipi.app", app_link)
+  end
+
+  postflight do
+    app_link = "/Applications/Klipi.app"
+    File.symlink(appdir/"Klipi.app", app_link) unless File.symlink?(app_link)
   end
 
   uninstall quit: "com.klipi.app"
@@ -45,7 +49,6 @@ cask "klipi" do
     s += "      2. Click the + button\n"
     s += "      3. Navigate to /Applications/Klipi.app and select it\n"
     s += "      4. Restart Klipi\n\n"
-    s += "To uninstall: run \e[34mklipi-uninstall\e[0m\n"
     s
   end
 end
