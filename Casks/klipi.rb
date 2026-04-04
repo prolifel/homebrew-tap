@@ -14,6 +14,12 @@ cask "klipi" do
 
   app "Klipi.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-rd", "com.apple.quarantine", "#{appdir}/Klipi.app"],
+                   sudo: true
+  end
+
   uninstall quit: "com.klipi.app"
 
   zap trash: [
