@@ -14,16 +14,6 @@ cask "klipi" do
 
   app "Klipi.app"
 
-  preflight do
-    app_link = "/Applications/Klipi.app"
-    File.unlink(app_link) if File.symlink?(app_link)
-  end
-
-  postflight do
-    app_link = "/Applications/Klipi.app"
-    File.symlink(appdir/"Klipi.app", app_link) unless File.symlink?(app_link)
-  end
-
   uninstall quit: "com.klipi.app"
 
   zap trash: [
@@ -33,14 +23,6 @@ cask "klipi" do
 
   caveats do
     s = "Klipi has been installed to #{appdir}/Klipi.app\n\n"
-
-    if File.symlink?("/Applications/Klipi.app")
-      s += "A symlink has been created in /Applications.\n\n"
-    else
-      s += "\e[33mCould not create symlink in /Applications.\e[0m\n"
-      s += "To add to Applications manually, run:\n"
-      s += "  ln -sf #{appdir}/Klipi.app /Applications/Klipi.app\n\n"
-    end
 
     s += "\e[32m==> IMPORTANT: Grant Input Monitoring permission!\e[0m\n"
     s += "    Without this permission, Klipi cannot monitor keyboard shortcuts.\n\n"
